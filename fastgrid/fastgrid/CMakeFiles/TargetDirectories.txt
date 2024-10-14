@@ -1,0 +1,4 @@
+/mnt/c/Users/evani/OneDrive/Documenten/Phd/RLMD/fastgrid/fastgrid/CMakeFiles/fastgrid4.dir
+/mnt/c/Users/evani/OneDrive/Documenten/Phd/RLMD/fastgrid/fastgrid/CMakeFiles/CleanCudaDepends.dir
+/mnt/c/Users/evani/OneDrive/Documenten/Phd/RLMD/fastgrid/fastgrid/CMakeFiles/edit_cache.dir
+/mnt/c/Users/evani/OneDrive/Documenten/Phd/RLMD/fastgrid/fastgrid/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,25 @@
+New Features
+
+Improved performance
+
+FastGrid is the new fork of AutoGrid, which is 100% compatible
+with AutoGrid 4.2.1. FastGrid is optimized to fully leverage
+the power of multi-core processors and NVIDIA graphics hardware.
+It is approximately 50 times faster in common scenarios and this
+may go even higher as the size of gridmap or the number of atoms
+in the macromolecule increases. For large gridmaps, it is possible
+to achieve increase in performance by a factor of 300.
+
+In case NVIDIA GeForce 8xxx or later graphics hardware is not
+present, FastGrid will still be more than N times faster, where N
+is the number of processor cores.
+
+Large gridmaps and macromolecules
+
+FastGrid can calculate much larger gridmaps than AutoGrid.
+The maximum allowed size of gridmap has been changed from 128x128x128
+to 1024x1024x1024 on both Linux and Windows.
+
+The maximum number of atoms in the macromolecule is now limited by
+the size of available memory instead of being specified by a fixed
+value.
