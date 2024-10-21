@@ -1,12 +1,19 @@
-import gymnasium as gym
-from gymnasium import spaces
+import sys
 import numpy as np
-from protein import Protein
-from ligand import Ligand
-import plotly.express as px
 
-p_path = r"C:\Users\evani\OneDrive\Documenten\Phd\RLMD\PDBbind_v2020_refined\refined-set\6fhq\6fhq_protein.pdb"
-l_path = r"C:\Users\evani\OneDrive\Documenten\Phd\RLMD\PDBbind_v2020_refined\refined-set\6fhq\6fhq_ligand.mol2"
+import gymnasium as gym
+from ligand import Ligand
+from protein import Protein
+import plotly.express as px
+from gymnasium import spaces
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+import prepare_receptor4
+import prepare_ligand4
+
+p_path = r"/home/lachmansinghet/data1/RLMD/PDBbind_v2020_refined/refined-set/6fhq/6fhq_protein.pdb"
+l_path = r"/home/lachmansinghet/data1/RLMD/PDBbind_v2020_refined/refined-set/6fhq/6fhq_ligand.mol2"
 
 
 class Environment(gym.Env):
@@ -29,6 +36,14 @@ class Environment(gym.Env):
 
         return
     
+    def prepare_receptor(self, file_name):
+        prepare_receptor4.main(file_name)
+        return 
+    
+    def prepare_receptor(self, file_name):
+        prepare_ligand4.main(file_name)
+        return         
+    
     def create_state(self):
         # Create Protein() using file
         protein = Protein(p_path)
@@ -45,7 +60,6 @@ class Environment(gym.Env):
     
     def calculate_reward():
 
-
         return reward
 
     def step(self, action):
@@ -57,7 +71,7 @@ class Environment(gym.Env):
         # Apply action (only translation for now) to first three columns
         self.state[self.state[:,3] == 1, :3] += action
 
-        self.plot_env()
+        # self.plot_3d_point_cloud_with_labels(self.state)
 
         return self.state, reward, done, {}, {}
     
@@ -68,6 +82,39 @@ class Environment(gym.Env):
         fig.show()
 
         return
+
+    def plot_3d_point_cloud_with_labels(self, points):
+        """
+        Plots a 3D point cloud where each point has x, y, z coordinates and a 4th dimension for color labeling.
+        
+        Parameters:
+        - points: A numpy array of shape (n, 4) where each row is [x, y, z, label].
+        label should be either 0 or 1, and will determine the color of the point.
+        """
+        # Extract x, y, z coordinates and labels from the input array
+        x_coords = points[:, 0]
+        y_coords = points[:, 1]
+        z_coords = points[:, 2]
+        labels = points[:, 3]  # 0 or 1
+        
+        # Define colors for the labels: 0 -> 'red', 1 -> 'blue'
+        colors = np.where(labels == 1, 'blue', 'red')
+        
+        # Create the 3D plot
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Scatter plot for the point cloud
+        scatter = ax.scatter(x_coords, y_coords, z_coords, c=colors, marker='o', s=50, alpha=0.8)
+        
+        # Set plot labels and title
+        ax.set_title('3D Point Cloud with Color Labels')
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+        
+        # Show plot
+        plt.show()
 
     def reset(self, options, seed=None):
         dict = {}
